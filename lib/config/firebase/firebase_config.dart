@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../core/utils/logger.dart';
 
 class FirebaseConfig {
@@ -18,18 +19,12 @@ class FirebaseConfig {
   static FirebaseOptions _getFirebaseOptions() {
     // For Android
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return const FirebaseOptions(
-        // apiKey: 'YOUR_ANDROID_API_KEY',
-        // appId: 'YOUR_ANDROID_APP_ID',
-        // messagingSenderId: 'YOUR_SENDER_ID',
-        // projectId: 'YOUR_PROJECT_ID',
-        // storageBucket: 'YOUR_STORAGE_BUCKET',
-
-         apiKey: 'AIzaSyDKmrNoachDX9kO1mEXGjcqIDZipRDXC-o',
-    appId: '1:1054132185789:android:908469081a8d6405a6a5d4',
-    messagingSenderId: '1054132185789',
-    projectId: 'coorg-explorer-464c0',
-    storageBucket: 'coorg-explorer-464c0.firebasestorage.app',
+      return FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY']!,
+        appId: dotenv.env['FIREBASE_APP_ID']!,
+        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID']!,
+        projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
+        storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET']!,
       );
     }
     // For iOS
@@ -44,8 +39,7 @@ class FirebaseConfig {
     //     iosBundleId: 'com.futurecraftlab.coorgtheexplorer',
     //   );
     // }
-    
-    
+
     throw UnsupportedError('Unsupported platform');
   }
 }
